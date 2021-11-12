@@ -1,9 +1,14 @@
 import './App.css';
+import Balance from './components/Balance';
+import Header from './components/Header';
 
 const App = () => {
   return (
     <>
-      <h1>Hello World!</h1>
+      <Header />
+      <div className="container">
+        <Balance />
+      </div>
     </>
   );
 }
