@@ -1,7 +1,9 @@
-// Where we are going to create our context
-
-import React, { createContext, useReducer } from 'react'
+import React, { createContext, useEffect, useReducer } from 'react'
 import AppReducer from './AppReducer'
+
+const init = (initialState) =>
+  JSON.parse(localStorage.getItem('global_context')) || initialState
+
 
 const initialState = {
   transactions: [],
@@ -10,7 +12,11 @@ const initialState = {
 const GlobalContext = createContext(initialState)
 
 const GlobalProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(AppReducer, initialState)
+  const [state, dispatch] = useReducer(AppReducer, initialState, init)
+
+  useEffect(() => {
+    localStorage.setItem('global_context', JSON.stringify(state))
+  }, [state])
 
   const deleteTransaction = (id) => {
     dispatch({
